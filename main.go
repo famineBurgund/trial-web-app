@@ -1,18 +1,21 @@
 package main
 
 import (
+	"html/template"
 	"net/http"
 	"os"
 )
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("<h1>Hello World!</h1>"))
+var tpl = template.Must(template.ParseFiles("index.html")) //Вводим прерывание при ошибках
+
+func indexHandler(w http.ResponseWriter, r *http.Request) { //По факту оставляем как есть, только через библиотеку html/template
+	tpl.Execute(w, nil) //Сейчас нет файла для создания шаблона,поэтому пока что nil
 }
 
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3000"
+		port = "1488"
 	}
 
 	mux := http.NewServeMux()
